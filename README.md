@@ -109,4 +109,34 @@ ilang pas halaman di-reload — konsep tambahan yang bisa dijelasin: bedanya sta
 ## Ide pengembangan lanjut
 - Checkout beneran (submit isi keranjang ke endpoint baru, buat record order di DB)
 - Halaman admin (EJS) buat kelola produk tanpa harus lewat Postman
-- Search produk (state `searchQuery` di `productStore`, filter tambahan)
+
+## Fitur tambahan (pengembangan tugas)
+
+Bagian ini nambahin fitur di atas struktur project yang sudah ada, tanpa mengubah
+arsitektur dasarnya (tetap SSR EJS + state management sederhana tanpa framework).
+
+### 1. Pencarian & sortir produk (extend `productStore`)
+State `productStore` (di `public/js/products.js`) ditambah 2 field baru: `search`
+dan `sortBy`. Input `#product-search` dan dropdown `#product-sort` di navbar
+langsung `setState()` ke store ini, dan `getFilteredProducts()` diperluas supaya
+memproses pencarian (cocokin nama/deskripsi) dan sortir (harga naik/turun, nama A-Z)
+sebelum kartu di-render ulang — semuanya tanpa reload halaman.
+
+### 2. Badge stok 3 level (data-driven, bukan cuma tersedia/habis)
+`renderBadge()`/`badge.ejs` sekarang punya varian warna `orange` buat kondisi
+"Stok Terbatas" (stok 1-5). Fungsi `getStockBadgeData(stock)` murni fungsi dari
+data produk — nunjukin komponen badge yang benar-benar reaktif terhadap data,
+bukan cuma dua kondisi hardcode.
+
+### 3. Wishlist / produk favorit (state + badge + kartu baru)
+File baru `public/js/wishlist.js` bikin `wishlistStore` terpisah (pakai
+`createStore()` yang sama), dengan:
+- Tombol hati (🤍/❤️) di tiap kartu produk buat toggle wishlist.
+- Badge jumlah item wishlist di navbar yang otomatis update lewat `subscribe()`,
+  persis pola yang sama kayak badge keranjang.
+- Drawer wishlist dengan komponen kartu baru (`renderWishlistCard`) yang bisa
+  langsung "+ Keranjang" atau dihapus dari wishlist.
+- Disimpen di `localStorage` (key `wishlist`), sama pola-nya kayak cart.
+- `productStore` dan `wishlistStore` saling terhubung: begitu wishlist berubah,
+  `renderProductList()` dipanggil ulang supaya ikon hati di kartu produk selalu
+  sinkron sama state wishlist yang sebenarnya.
