@@ -1,4 +1,4 @@
-# Toko Cart App — State Management, Dynamic Rendering, Komponen Berbasis Data
+# Toko Cart App State Management, Dynamic Rendering, Komponen Berbasis Data
 
 API + tampilan (EJS + Tailwind), tanpa AI. Fokus materi: katalog produk, keranjang
 belanja dengan badge dinamis, dan dark/light mode — semuanya demo konsep **state
@@ -61,17 +61,12 @@ npm run dev
 
 ## Endpoint API
 
-| Method | Endpoint             | Auth  | Keterangan       |
-|--------|------------------------|-------|--------------------|
-| POST   | /api/admin/login       | -     | Login admin (session) |
-| POST   | /api/admin/logout      | admin | Logout             |
-| GET    | /api/products          | -     | List produk (JSON) |
-| POST   | /api/products          | admin | Tambah produk       |
-| PUT    | /api/products/:id      | admin | Update produk       |
-| DELETE | /api/products/:id      | admin | Hapus produk        |
-| GET    | /                       | -     | Halaman utama (EJS) |
-
-Login admin default (dari seeder): `admin` / `admin123`.
+tampilan web: <img width="1919" height="960" alt="TAMPILAN" src="https://github.com/user-attachments/assets/1fc26b15-73a7-4cd7-a40b-35d46748e1db" />
+login: <img width="952" height="662" alt="LOG" src="https://github.com/user-attachments/assets/1c4a889a-2117-481f-b1a2-3be666860086" />
+get: <img width="953" height="655" alt="GET" src="https://github.com/user-attachments/assets/a08a8e01-b857-4655-acf8-ceefae52c7bd" />
+post: <img width="955" height="652" alt="POST" src="https://github.com/user-attachments/assets/24aec667-95c3-48af-af79-a3d55ac24cf0" />
+put: <img width="952" height="654" alt="PUT" src="https://github.com/user-attachments/assets/2e3e3d4d-92ae-4bab-a31a-1bf175c10d6b" />
+delete: <img width="952" height="655" alt="DEL" src="https://github.com/user-attachments/assets/2c49b542-7443-44c5-8905-97360e018a5b" />
 
 ## Konsep yang kedemo
 
