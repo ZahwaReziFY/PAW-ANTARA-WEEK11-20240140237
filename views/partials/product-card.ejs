@@ -1,0 +1,56 @@
+<%
+// Badge stok sekarang 3 level (bukan cuma 2), ditentukan dinamis dari data stok:
+// habis -> merah, stok sedikit -> oranye ("stok terbatas"), aman -> hijau.
+const isAvailable = product.stock > 0;
+let badgeLabel, badgeColor;
+if (product.stock === 0) {
+  badgeLabel = 'Habis';
+  badgeColor = 'red';
+} else if (product.stock <= 5) {
+  badgeLabel = 'Stok Terbatas';
+  badgeColor = 'orange';
+} else {
+  badgeLabel = 'Tersedia';
+  badgeColor = 'green';
+}
+%>
+<div
+  class="product-card relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+  data-stock="<%= product.stock %>"
+>
+  <!--
+    Tombol wishlist (komponen berbasis data baru). Render awal selalu "belum favorit"
+    karena wishlist disimpan di localStorage sisi client; begitu public/js/wishlist.js
+    & products.js jalan, kartu ini langsung di-render ulang dan hati-nya sinkron
+    sama state wishlist yang sebenarnya (lihat renderProductList di products.js).
+  -->
+  <button
+    class="wishlist-toggle-btn absolute top-3 right-3 text-lg leading-none"
+    data-id="<%= product.id %>"
+    data-name="<%= product.name %>"
+    data-price="<%= product.price %>"
+    title="Simpan ke wishlist"
+  >🤍</button>
+
+  <div class="flex items-start justify-between mb-2 pr-8">
+    <h3 class="font-semibold text-gray-800 dark:text-gray-100"><%= product.name %></h3>
+    <%- include('badge', { label: badgeLabel, color: badgeColor }) %>
+  </div>
+  <p class="text-sm text-gray-500 dark:text-gray-400 mb-3"><%= product.description || 'Tanpa deskripsi' %></p>
+  <div class="flex items-center justify-between mb-3">
+    <span class="text-blue-600 dark:text-blue-400 font-bold">
+      Rp<%= product.price.toLocaleString('id-ID') %>
+    </span>
+    <span class="text-xs text-gray-400 dark:text-gray-500">Stok: <%= product.stock %></span>
+  </div>
+  <button
+    class="add-to-cart-btn w-full <%= isAvailable ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed' %> text-sm font-semibold py-2 rounded-lg transition-colors"
+    data-id="<%= product.id %>"
+    data-name="<%= product.name %>"
+    data-price="<%= product.price %>"
+    data-stock="<%= product.stock %>"
+    <%= isAvailable ? '' : 'disabled' %>
+  >
+    <%= isAvailable ? '+ Tambah ke Keranjang' : 'Stok Habis' %>
+  </button>
+</div>
